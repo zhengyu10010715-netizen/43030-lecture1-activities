@@ -1,11 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>GitHub Workflow Practice</title>
-</head>
-<body>
-  <h1>GitHub Workflow Practice</h1>
-  <p>This page records workflow updates.</p>
-</body>
-</html>
+name: Collaborative Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update_html_and_readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Update HTML
+        if: github.actor == 'zhengyu10010715-netizen'
+        run: |
+          sed -i "/<\/body>/i <p>Updated by Team Leader on $(date -u '+%Y-%m-%d %H:%M:%S UTC')</p>" index.html
+          cat index.html
