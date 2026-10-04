@@ -11,3 +11,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
+
+      - name: Update HTML
+        if: github.actor == 'zhengyu10010715-netizen'
+        run: |
+          sed -i "/<\/body>/i <p>Updated by Team Leader on $(date -u '+%Y-%m-%d %H:%M:%S UTC')</p>" index.html
+          cat index.html
+
+      - name: Update README
+        run: |
+          echo "" >> README.md
+          echo "### Updated by $GITHUB_ACTOR on $(date -u '+%Y-%m-%d %H:%M:%S UTC') [Commit: $(git rev-parse --short HEAD)]" >> README.md
+          cat README.md
